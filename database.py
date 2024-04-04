@@ -28,6 +28,18 @@ class Image(Base):
     image = Column(String(255))
     created_at = Column(DateTime, default=datetime.now)
 
+
+# utility functions
+def get_db():
+    engine = create_engine('sqlite:///example.db')
+    return sessionmaker(bind=engine)()
+
+def save_to_db(object):
+    db = get_db()       # open database
+    db.add(object)      # insert object
+    db.commit()         # save changes
+    db.close()          # close database
+
 # create database
 if __name__ == "__main__":
     engine = create_engine('sqlite:///example.db')
